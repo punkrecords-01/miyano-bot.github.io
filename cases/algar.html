@@ -1,66 +1,406 @@
-<!doctype html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Case — Algar Telecom</title>
-  <link href="/" rel="canonical">
-  <link href="/index.html" rel="stylesheet">
-  <style>
-    body { background: #050505; color: #fff; font-family: Inter, system-ui, sans-serif; padding: 40px; }
-    a { color: #00ff88; text-decoration: none; }
-    .container { max-width: 900px; margin: 0 auto; }
-    .hero { margin-bottom: 18px; }
-    .sub { color: #aaa; margin-bottom: 18px }
-    .section { margin-top: 18px; }
-    .back { display:inline-block; margin-bottom: 12px; }
-    pre.prompt { background: #0b0b0b; border:1px solid rgba(255,255,255,0.03); padding:12px; color:#9fd; border-radius:6px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algar Telecom  Case Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --accent: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.3);
+            --border: #222;
+            --text-main: #ffffff;
+            --text-dim: #888;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #e5e5e5;
+        }
+        
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        .bg-noise {
+            position: fixed;
+            inset: 0;
+            z-index: 5;
+            opacity: 0.05;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+
+        .hud-nav {
+            display: none;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+            margin: 4rem 0;
+        }
+
+        /* Case Back Affordance */
+        .case-breadcrumb {
+            position: absolute;
+            top: 2rem;
+            left: 2.5rem;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono';
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .case-breadcrumb a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .case-breadcrumb a:hover {
+            color: var(--accent);
+        }
+    </style>
 </head>
-<body>
-  <div class="container">
-    <a class="back" href="/">← Voltar</a>
-    <h1>Algar Telecom</h1>
-    <div class="sub">Como o redesenho focado em performance e utilidade elevou a nota do app de 1.9 para 3.0.</div>
-
-    <div class="section">
-      <img src="../assets/algar/hero.png" alt="App Algar" style="width: 100%; border-radius: 12px; margin-bottom: 24px; border: 1px solid rgba(255,255,255,0.1);">
-      <h2>O Desafio</h2>
-      <p>O app da Algar Telecom era o principal ponto de atrito entre a marca e o cliente. Com uma nota de 1.9 nas lojas, o aplicativo gerava mais frustração do que autonomia. O desafio era transformar uma ferramenta instável em um canal de autoatendimento funcional que reduzisse a carga do call center.</p>
+<body class="antialiased overflow-x-hidden selection:bg-[#00ff88] selection:text-black">
+    
+    <!-- Case Breadcrumb Navigation -->
+    <div class="case-breadcrumb">
+        <a href="../index.html#work">← Back to Projects</a>
     </div>
 
-    <div class="section">
-      <h2>Meu Papel</h2>
-      <ul>
-        <li>UX Research: análise de dados de suporte e reviews de lojas para mapear dores.</li>
-        <li>Product Design: redesenho completo dos fluxos críticos (Login e Pagamento).</li>
-        <li>Facilitação: alinhamento entre limitações da engenharia e necessidades do usuário.</li>
-      </ul>
-    </div>
+    <div class="bg-noise"></div>
 
-    <div class="section">
-      <h2>Estratégia — "Fix the Basics"</h2>
-      <ul>
-        <li>Simplificação do Login: biometria e redução de fricção.</li>
-        <li>Otimização do Fluxo de Fatura: de 5 para 2 cliques para acessar código de barras/PIX.</li>
-        <li>Feedback Visual: estados de erro e carregamento (skeletons) claros.</li>
-      </ul>
-    </div>
+    <main class="relative z-10 pt-32">
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-6 mb-32">
+            <div class="inline-block border border-[var(--accent)]/30 px-3 py-1 mb-8 bg-[var(--accent)]/5">
+                <span class="mono text-[10px] text-[var(--accent)] uppercase tracking-widest font-bold">Telecom  App Redesign  Utility</span>
+            </div>
+            
+            <h1 class="text-6xl md:text-8xl uppercase mb-12 leading-[0.85] tracking-tight" style="font-weight: 800;">
+                ALGAR<br><span class="text-[var(--accent)]">TELECOM</span>
+            </h1>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-8">
+                    <p class="text-2xl text-neutral-300 leading-tight mb-6">
+                        Transformando um aplicativo problemático em uma ferramenta <span class="text-white font-semibold italic">útil e agradável</span> para milhares de usuários através de um redesenho focado em estabilidade e fluxos intuitivos.
+                    </p>
+                    <div class="inline-flex items-center gap-3 px-4 py-2 border border-[var(--accent)]/20 bg-[var(--accent)]/5 rounded-sm">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent)]"></span>
+                        </span>
+                        <p class="text-sm font-medium text-[var(--accent)] mono uppercase tracking-tight">
+                            Redesign estratégico que aumentou a estabilidade do app e elevou a avaliação de 1.9 para 3.0.
+                        </p>
+                    </div>
+                </div>
+                <div class="lg:col-span-4 border-l border-white/10 pl-8">
+                    <div class="space-y-6">
+                        <div>
+                            <span class="mono text-[10px] text-neutral-500 uppercase block mb-1">Role</span>
+                            <span class="font-bold">UX Designer</span>
+                        </div>
+                        <div>
+                            <span class="mono text-[10px] text-neutral-500 uppercase block mb-1">Client</span>
+                            <span class="font-bold">Algar Telecom</span>
+                        </div>
+                        <div>
+                            <span class="mono text-[10px] text-neutral-500 uppercase block mb-1">Duration</span>
+                            <span class="font-bold">1 Year</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="section">
-      <h2>Resultados</h2>
-      <ul>
-        <li>Rating: salto de 1.9 para ~3.0 nas lojas.</li>
-        <li>Conversão: aumento na taxa de sucesso de pagamento via app.</li>
-        <li>Eficiência Operacional: redução significativa de chamados ao suporte.</li>
-      </ul>
-    </div>
+        <!-- Content Structure -->
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="section-divider"></div>
 
-    <div class="section">
-      <h2>Visual Prompt (for mockups)</h2>
-      <pre class="prompt">Mockup profissional de um smartphone exibindo um aplicativo de telecomunicações moderno. A tela mostra uma dashboard limpa com um card de fatura em destaque e um botão de 'Copiar Código PIX'. Cores azul e branco, estilo clean, iluminação de estúdio para portfólio de design.</pre>
-    </div>
+            <!-- Overview -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">01 / OVERVIEW</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Conectando<br>Pessoas</h3>
+                </div>
+                <div class="lg:col-span-8 prose prose-invert">
+                    <p class="text-lg text-neutral-400 leading-relaxed mb-6">
+                        O aplicativo móvel da Algar Telecom é a principal interface digital entre a marca e seus clientes. Quando me juntei à equipe, o app enfrentava desafios significativos que impactavam negativamente a experiência do usuário e a percepção da marca.
+                    </p>
+                    <p class="text-lg text-neutral-400 leading-relaxed mb-12">
+                        A promessa era de conveniência, mas a realidade gerava frustração e sobrecarregava outros canais. Meu foco foi colaborar na identificação e solução desses problemas, buscando transformar o aplicativo em uma ferramenta verdadeiramente útil e eficiente.
+                    </p>
 
-  </div>
+                    <div class="bg-white/[0.03] border border-white/10 p-8 mb-12">
+                        <h4 class="mono text-[10px] text-[var(--accent)] uppercase mb-6 tracking-widest">// My Role: UX Lead & Strategist</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-neutral-300">
+                            <ul class="space-y-3">
+                                <li class="flex gap-3"><span class="text-[var(--accent)]">/</span> Liderança de UX no redesenho de fluxos críticos</li>
+                                <li class="flex gap-3"><span class="text-[var(--accent)]">/</span> Definição de arquitetura de informação e navegação</li>
+                            </ul>
+                            <ul class="space-y-3">
+                                <li class="flex gap-3"><span class="text-[var(--accent)]">/</span> Ponte estratégica entre negócio, engenharia e usuários</li>
+                                <li class="flex gap-3"><span class="text-[var(--accent)]">/</span> Implementação de cultura de validação contínua</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white/5 border border-white/5 p-8">
+                            <h4 class="mono text-[10px] text-white uppercase mb-4 tracking-widest">// Responsabilidades</h4>
+                            <ul class="space-y-2 text-sm text-neutral-400">
+                                <li class="flex gap-3"><span></span> Pesquisa com Usuários (Entrevistas & Dados)</li>
+                                <li class="flex gap-3"><span></span> Mapeamento de Jornadas (Atritos & Fluxos)</li>
+                                <li class="flex gap-3"><span></span> Design de Interface (UI/UX & Design System)</li>
+                                <li class="flex gap-3"><span></span> Testes de Usabilidade & Validação</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white/5 border border-white/5 p-8">
+                            <h4 class="mono text-[10px] text-white uppercase mb-4 tracking-widest">// Objetivos</h4>
+                            <ul class="space-y-2 text-sm text-neutral-400">
+                                <li class="flex gap-3"><span></span> Voz do usuário no time multidisciplinar</li>
+                                <li class="flex gap-3"><span></span> Decisões de design centradas no usuário</li>
+                                <li class="flex gap-3"><span></span> Alinhamento com metas de negócio</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- The Problem -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">02 / THE PROBLEM</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Experiência<br>Fragmentada</h3>
+                </div>
+                <div class="lg:col-span-8">
+                    <p class="text-xl text-neutral-300 mb-8 leading-tight">
+                        A análise do cenário revelou um quadro crítico, corroborado por dados de suporte e avaliações nas lojas:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                        <div class="p-6 border border-white/5 bg-white/[0.02]">
+                            <div class="text-[var(--accent)] mono text-xl mb-4">Instabilidade</div>
+                            <p class="text-sm text-neutral-500 leading-relaxed italic">Lentidão excessiva e travamentos que tornavam tarefas simples em processos demorados.</p>
+                        </div>
+                        <div class="p-6 border border-white/5 bg-white/[0.02]">
+                            <div class="text-[var(--accent)] mono text-xl mb-4">Bugs Funcionais</div>
+                            <p class="text-sm text-neutral-500 leading-relaxed italic">Erros recorrentes no pagamento de faturas e login impediam as jornadas principais.</p>
+                        </div>
+                        <div class="p-6 border border-white/5 bg-white/[0.02]">
+                            <div class="text-[var(--accent)] mono text-xl mb-4">Fluxos Confusos</div>
+                            <p class="text-sm text-neutral-500 leading-relaxed italic">Navegação pouco intuitiva com pouco feedback em casos de erro.</p>
+                        </div>
+                        <div class="p-6 border border-white/5 bg-white/[0.02]">
+                            <div class="text-[var(--accent)] mono text-xl mb-4">Suporte Ineficaz</div>
+                            <p class="text-sm text-neutral-500 leading-relaxed italic">Canais de suporte inoperantes dentro do app levando a "becos sem saída".</p>
+                        </div>
+                    </div>
+                    <div class="bg-red-500/5 border border-red-500/20 p-8">
+                        <h4 class="mono text-[10px] text-red-400 uppercase mb-4 tracking-widest">// Business Consequences</h4>
+                        <p class="text-sm text-neutral-400 leading-relaxed italic">
+                            Esses problemas não eram apenas estéticos; eles impactavam diretamente indicadores críticos como <span class="text-white font-bold">CSAT (Customer Satisfaction Survey)</span> e <span class="text-white font-bold">FCR (First Contact Resolution)</span>. A falha no canal digital gerava um custo operacional massivo ao transbordar dúvidas simples para o call center, além de comprometer severamente a confiança do usuário na marca.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Process -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">03 / THE PROCESS</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Decision-Driven<br>Design</h3>
+                </div>
+                <div class="lg:col-span-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+                        <div>
+                            <h4 class="mono text-xs uppercase text-white mb-4 border-b border-white/10 pb-2 tracking-widest">01. Descoberta e Definição</h4>
+                            <p class="text-sm text-neutral-400 leading-relaxed mb-4">
+                                Imersão profunda para entender os motivos das falhas. Analisamos avaliações de lojas, métricas de uso e conduzimos entrevistas para capturar frustrações.
+                            </p>
+                            <div class="bg-white/5 p-4 border-l-2 border-[var(--accent)]">
+                                <span class="mono text-[10px] text-neutral-500 uppercase block mb-1 underline">Insight-chave:</span>
+                                <p class="text-xs text-neutral-300 italic">Pagamentos e login concentravam a maior frustração. <span class="text-white font-bold">Decisão:</span> priorizar estabilidade desses fluxos críticos antes de qualquer melhoria visual estética.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="mono text-xs uppercase text-white mb-4 border-b border-white/10 pb-2 tracking-widest">02. Ideação e Prototipagem</h4>
+                            <p class="text-sm text-neutral-400 leading-relaxed mb-4">
+                                Brainstorming com a equipe multidisciplinar focado em simplicidade. Traduzimos ideias em wireframes e protótipos de alta fidelidade seguindo o design system.
+                            </p>
+                            <div class="bg-white/5 p-4 border-l-2 border-[var(--accent)]">
+                                <span class="mono text-[10px] text-neutral-500 uppercase block mb-1 underline">Trade-off:</span>
+                                <p class="text-xs text-neutral-300 italic">Reduzimos funcionalidades secundárias e banners de marketing para aliviar a carga da API. <span class="text-white font-bold">Decisão:</span> priorizar performance técnica sobre exposição comercial.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="mono text-xs uppercase text-white mb-4 border-b border-white/10 pb-2 tracking-widest">03. Teste e Validação</h4>
+                            <p class="text-sm text-neutral-400 leading-relaxed mb-4">
+                                Nenhuma solução foi implementada sem validação. Moderamos sessões de testes de usabilidade remotos.
+                            </p>
+                            <div class="bg-white/5 p-4 border-l-2 border-[var(--accent)]">
+                                <span class="mono text-[10px] text-neutral-500 uppercase block mb-1 underline">Aprendizado:</span>
+                                <p class="text-xs text-neutral-300 italic">Usuários aceitavam processos mais longos se houvesse feedback de progresso real. <span class="text-white font-bold">Decisão:</span> implementamos estados de "carregando" informativos.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="mono text-xs uppercase text-white mb-4 border-b border-white/10 pb-2 tracking-widest">04. Colaboração e Entrega</h4>
+                            <p class="text-sm text-neutral-400 leading-relaxed mb-4">
+                                Comunicação constante com desenvolvedores e QAs nas cerimônias ágeis.
+                            </p>
+                            <div class="bg-white/5 p-4 border-l-2 border-[var(--accent)]">
+                                <span class="mono text-[10px] text-neutral-500 uppercase block mb-1 underline">Alinhamento:</span>
+                                <p class="text-xs text-neutral-300 italic">Criação de documentação de hand-off detalhando comportamentos de erro. <span class="text-white font-bold">Decisão:</span> Design e QA validam juntos cada história de usuário.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Challenges & Lessons -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">04 / CHALLENGES</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Influência &<br>Estratégia</h3>
+                </div>
+                <div class="lg:col-span-8 space-y-12">
+                    <div>
+                        <h4 class="text-white font-bold mb-2 uppercase text-sm mono">Influência Técnica e Trade-offs</h4>
+                        <p class="text-neutral-400 text-sm mb-4">A instabilidade vinha de arquiteturas legadas. Atuei diretamente com os leads de engenharia para identificar quais melhorias visuais causariam menor estresse no backend, priorizando a estabilidade do app sobre o refinamento estético inicial.</p>
+                        <p class="mono text-[10px] text-[var(--accent)] uppercase">Como influenciei: Usei dados de crash-report para convencer stakeholders a adiar novas features em prol da correção de débitos técnicos críticos.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold mb-2 uppercase text-sm mono">Negociação com Stakeholders</h4>
+                        <p class="text-neutral-400 text-sm mb-4">Mudar a cultura de "entrega rápida" para "entrega validada" exigiu demonstração constante de valor. Apresentei vídeos de usuários falhando em tarefas simples para gerar empatia e justificar o tempo gasto em pesquisa e testes.</p>
+                        <p class="mono text-[10px] text-[var(--accent)] uppercase">Resultado: O processo de validação tornou-se etapa obrigatória no ciclo de desenvolvimento (Definition of Ready).</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold mb-2 uppercase text-sm mono">Consolidação de UX como Disciplina</h4>
+                        <p class="text-neutral-400 text-sm mb-4">Estabeleci rituais de design review com desenvolvedores, reduzindo drasticamente o retrabalho e aumentando a qualidade final da interface implementada.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Impact -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">05 / IMPACT + RESULTS</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Resultados<br>Estratégicos</h3>
+                </div>
+                <div class="lg:col-span-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+                        <!-- User Impact -->
+                        <div class="space-y-4">
+                            <h4 class="mono text-[10px] text-neutral-500 uppercase tracking-[0.2em]">User Impact</h4>
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="text-3xl font-black text-white">↑ Estabilidade</div>
+                                    <p class="text-[10px] text-neutral-500 uppercase mono">Redução de crash-rate e percepção de fluidez no uso.</p>
+                                </div>
+                                <div>
+                                    <div class="text-3xl font-black text-white">1.9 → 3.0</div>
+                                    <p class="text-[10px] text-neutral-500 uppercase mono">Rating médio nas lojas atingido após o primeiro ciclo de correções.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Business Impact -->
+                        <div class="space-y-4">
+                            <h4 class="mono text-[10px] text-neutral-500 uppercase tracking-[0.2em]">Business Impact</h4>
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="text-3xl font-black text-white">↑ Adoção</div>
+                                    <p class="text-[10px] text-neutral-500 uppercase mono">O app consolidou-se como canal principal de autoatendimento.</p>
+                                </div>
+                                <div>
+                                    <div class="text-3xl font-black text-white">↓ Call Center</div>
+                                    <p class="text-[10px] text-neutral-500 uppercase mono">Redução de transbordo de tarefas transacionais para suporte humano.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Organizational Impact -->
+                        <div class="space-y-4">
+                            <h4 class="mono text-[10px] text-neutral-500 uppercase tracking-[0.2em]">Organizational Impact</h4>
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="text-3xl font-black text-white">UX Culture</div>
+                                    <p class="text-[10px] text-neutral-500 uppercase mono">Criação de rituais de validação integrados ao ciclo ágil.</p>
+                                </div>
+                                <div>
+                                    <div class="text-3xl font-black text-white">Synergy</div>
+                                    <p class="text-[10px] text-neutral-500 uppercase mono">Alinhamento tático entre Produto, Engenharia e Design.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Strategic Takeaway -->
+                    <div class="p-12 border border-white/5 bg-white/[0.02] mb-12">
+                        <p class="text-xl text-neutral-300 leading-tight italic mb-8">
+                            "Este projeto reforçou meu papel como designer focado em resolver problemas complexos de negócio através de experiências digitais confiáveis, escaláveis e centradas no usuário."
+                        </p>
+                    </div>
+
+                    <!-- What's Next / Product Thinking -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 py-12 border-t border-white/5">
+                        <div class="space-y-4">
+                            <h4 class="mono text-[10px] text-[var(--accent)] uppercase tracking-widest underline underline-offset-4">What I'd Do Next</h4>
+                            <ul class="space-y-2 text-sm text-neutral-400 font-mono">
+                                <li>→ Monitorar métricas de retenção por cohort</li>
+                                <li>→ Expandir ferramentas de autosserviço preditivo</li>
+                                <li>→ Evoluir o design system para multimarca</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-4">
+                            <h4 class="mono text-[10px] text-[var(--accent)] uppercase tracking-widest underline underline-offset-4">Artifact Insight</h4>
+                            <div class="aspect-video bg-neutral-900 flex items-center justify-center border border-white/5 p-4 group cursor-help">
+                                 <img src="https://placehold.co/800x450/111/00ff88?text=FLOW+BEFORE+vs+AFTER" alt="Flow comparison" class="opacity-40 group-hover:opacity-60 transition-opacity">
+                            </div>
+                            <p class="text-[10px] text-neutral-500 uppercase mono text-center italic">Simplificação de fluxos críticos de pagamento.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Project Navigation -->
+    <footer class="border-t border-white/5 pt-24 pb-12 mt-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-12">
+                <div>
+                    <span class="mono text-[10px] text-neutral-500 uppercase tracking-widest mb-4 block">Next Project</span>
+                    <a href="volpi.html" class="text-6xl md:text-8xl font-black uppercase hover:text-[var(--accent)] transition-colors tracking-tighter italic">VOLPI<br>FINANCE</a>
+                </div>
+                <a href="../index.html" class="mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 hover:text-white transition-all pb-4">
+                    Back to Index [04]
+                </a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

@@ -1,63 +1,314 @@
-<!doctype html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Case — Volpi</title>
-  <link href="/index.html" rel="stylesheet">
-  <style>
-    body { background: #050505; color: #fff; font-family: Inter, system-ui, sans-serif; padding: 40px; }
-    a { color: #00ff88; text-decoration: none; }
-    .container { max-width: 900px; margin: 0 auto; }
-    .hero { margin-bottom: 18px; }
-    .sub { color: #aaa; margin-bottom: 18px }
-    .section { margin-top: 18px; }
-    pre.prompt { background: #0b0b0b; border:1px solid rgba(255,255,255,0.03); padding:12px; color:#9fd; border-radius:6px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volpi  Case Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --accent: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.3);
+            --border: #222;
+            --text-main: #ffffff;
+            --text-dim: #888;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #e5e5e5;
+        }
+        
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        .bg-noise {
+            position: fixed;
+            inset: 0;
+            z-index: 5;
+            opacity: 0.05;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+
+        .hud-nav {
+            display: none;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+            margin: 4rem 0;
+        }
+
+        /* Case Back Affordance */
+        .case-breadcrumb {
+            position: absolute;
+            top: 2rem;
+            left: 2.5rem;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono';
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .case-breadcrumb a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .case-breadcrumb a:hover {
+            color: var(--accent);
+        }
+    </style>
 </head>
-<body>
-  <div class="container">
-    <a href="/">← Voltar</a>
-    <h1>Volpi</h1>
-    <div class="sub">Redesenhando o financiamento imobiliário: transparência e agilidade em um processo complexo.</div>
-
-    <div class="section">
-      <h2>O Desafio</h2>
-      <p>O financiamento imobiliário na Volpi era percebido como uma "caixa preta": desistências devido à falta de clareza sobre etapas, prazos e documentos. O objetivo foi criar uma plataforma digital que guiasse o usuário com autonomia e confiança.</p>
+<body class="antialiased overflow-x-hidden selection:bg-[#00ff88] selection:text-black">
+    
+    <!-- Case Breadcrumb Navigation -->
+    <div class="case-breadcrumb">
+        <a href="../index.html#work">← Back to Projects</a>
     </div>
 
-    <div class="section">
-      <h2>Meu Papel</h2>
-      <ul>
-        <li>UX Research & Mapping: entrevistas com usuários e especialistas para identificar gargalos.</li>
-        <li>Interface Design: criação de um dashboard focado em status e visibilidade de progresso.</li>
-        <li>Product Strategy: definição de métricas de sucesso e priorização.</li>
-      </ul>
-    </div>
+    <div class="bg-noise"></div>
 
-    <div class="section">
-      <h2>Solução — Transparência Radical</h2>
-      <ul>
-        <li>Timeline de Progresso Interativa.</li>
-        <li>Centro de Documentos Inteligente.</li>
-        <li>Simulador Progressivo que entrega valor rápido.</li>
-      </ul>
-    </div>
+    <main class="relative z-10 pt-32">
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-6 mb-32">
+            <div class="inline-block border border-[var(--accent)]/30 px-3 py-1 mb-8 bg-[var(--accent)]/5">
+                <span class="mono text-[10px] text-[var(--accent)] uppercase tracking-widest font-bold">Fintech  Real Estate  Strategy</span>
+            </div>
+            
+            <h1 class="text-6xl md:text-8xl uppercase mb-12 leading-[0.85] tracking-tight" style="font-weight: 800;">
+                DIGITAL<br><span class="text-[var(--accent)]">MORTGAGE</span>
+            </h1>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-8">
+                    <p class="text-2xl text-neutral-300 leading-tight">
+                        End-to-end UX strategy for a <span class="text-white font-semibold italic">complex financial product</span> — transforming ambiguity into clear, scalable solutions.
+                    </p>
+                </div>
+                <div class="lg:col-span-4 border-l border-white/10 pl-8">
+                    <div class="space-y-6">
+                        <div>
+                            <span class="mono text-[10px] text-neutral-500 uppercase block mb-1">Role</span>
+                            <span class="font-bold">UX Designer & Strategist</span>
+                        </div>
+                        <div>
+                            <span class="mono text-[10px] text-neutral-500 uppercase block mb-1">Duration</span>
+                            <span class="font-bold">8 Months</span>
+                        </div>
+                        <div>
+                            <span class="mono text-[10px] text-neutral-500 uppercase block mb-1">Context</span>
+                            <span class="font-bold">Fintech / Real Estate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="section">
-      <h2>Resultados</h2>
-      <ul>
-        <li>Retenção: redução de 40% no tempo total do processo.</li>
-        <li>Conversão: aumento de 35% na conversão de leads para contratos finalizados.</li>
-        <li>Satisfação: NPS de +47, acima da média do setor (+12).</li>
-      </ul>
-    </div>
+        <!-- Content Structure -->
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="section-divider"></div>
 
-    <div class="section">
-      <h2>Visual Prompt (for mockups)</h2>
-      <pre class="prompt">Interface de usuário (UI) de uma plataforma web de financiamento imobiliário exibindo uma timeline de progresso elegante (passo a passo). Estilo minimalista, cores cinza suave e verde, mostrando etapas como 'Documentação', 'Análise' e 'Aprovação'. Visualização limpa e profissional para site de tecnologia.</pre>
-    </div>
+            <!-- The Problem -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">01 / THE PROBLEM</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Opaque &<br>Bureaucratic</h3>
+                </div>
+                <div class="lg:col-span-8 prose prose-invert">
+                    <p class="text-lg text-neutral-400 leading-relaxed mb-8">
+                        Home financing was perceived as slow and complex. Users frequently abandoned the process due to unclear requirements and lack of status visibility. Internally, disconnected teams and manual handoffs caused delays, rework, and inconsistent decisions.
+                    </p>
+                    
+                    <h4 class="mono text-[10px] text-white uppercase mb-6 tracking-widest">// Impact Before Design</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-6 border border-white/5 bg-white/[0.02]">
+                            <p class="text-xs text-neutral-500 uppercase tracking-widest leading-relaxed">High Drop-off during application</p>
+                        </div>
+                        <div class="p-6 border border-white/5 bg-white/[0.02]">
+                            <p class="text-xs text-neutral-500 uppercase tracking-widest leading-relaxed">Long approval cycles</p>
+                        </div>
+                        <div class="p-6 border border-white/5 bg-white/[0.02]">
+                            <p class="text-xs text-neutral-500 uppercase tracking-widest leading-relaxed">Cross-team operational inefficiency</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  </div>
+            <div class="section-divider"></div>
+
+            <!-- Ownership -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">02 / OWNERSHIP</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">The UX<br>Strategist</h3>
+                </div>
+                <div class="lg:col-span-8">
+                    <p class="text-xl text-neutral-300 mb-12 leading-tight">
+                        I led the UX strategy end-to-end, acting as the bridge between user needs and business constraints in a regulated environment.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white/5 border border-white/5 p-8">
+                            <h4 class="mono text-[10px] text-white uppercase mb-4 tracking-widest">// Responsibilities</h4>
+                            <ul class="space-y-2 text-sm text-neutral-400">
+                                <li class="flex gap-3"><span></span> Research synthesis and problem framing</li>
+                                <li class="flex gap-3"><span></span> Experience strategy and journey definition</li>
+                                <li class="flex gap-3"><span></span> User flow mapping and service blueprinting</li>
+                                <li class="flex gap-3"><span></span> Information architecture and interaction logic</li>
+                                <li class="flex gap-3"><span></span> Alignment with product, engineering, legal, & ops</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white/5 border border-white/5 p-8">
+                            <h4 class="mono text-[10px] text-white uppercase mb-4 tracking-widest">// Strategy Approach</h4>
+                            <ul class="space-y-2 text-sm text-neutral-400">
+                                <li class="flex gap-3 text-[var(--accent)]"><span>—</span> Clarity over completeness</li>
+                                <li class="flex gap-3 text-[var(--accent)]"><span>—</span> Visibility over control</li>
+                                <li class="flex gap-3 text-[var(--accent)]"><span>—</span> Reduce cognitive load, not just steps</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Artifacts -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">03 / CORE ARTIFACTS</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Evidence &<br>Outcomes</h3>
+                </div>
+                <div class="lg:col-span-8">
+                    <!-- User Flow -->
+                    <div class="mb-24">
+                        <h4 class="text-white font-bold mb-4 uppercase text-sm mono">User Flow Map</h4>
+                        <p class="text-neutral-400 text-sm mb-8">Mapped the full journey to expose redundant validations, unnecessary decision points, and moments of user uncertainty.</p>
+                        <div class="brutalist-card bg-white/[0.03] border border-white/10 p-4">
+                            <div class="aspect-video w-full bg-neutral-900 flex items-center justify-center border border-white/5 mb-4">
+                                <img src="https://placehold.co/1200x800/222/00ff88?text=USER+FLOW+MAP" alt="Volpi User Flow" class="max-w-full h-auto opacity-50">
+                            </div>
+                            <p class="mono text-[10px] text-neutral-500 uppercase">Outcome: Simplified experience and removed friction that caused drop-off.</p>
+                        </div>
+                    </div>
+
+                    <!-- Service Blueprint -->
+                    <div>
+                        <h4 class="text-white font-bold mb-4 uppercase text-sm mono">Service Blueprint</h4>
+                        <p class="text-neutral-400 text-sm mb-8">Connected frontstage user actions with backstage operations (credit analysis, legal checks, internal approvals).</p>
+                        <div class="brutalist-card bg-white/[0.03] border border-white/10 p-4">
+                            <div class="aspect-video w-full bg-neutral-900 flex items-center justify-center border border-white/5 mb-4">
+                                <img src="https://placehold.co/1200x800/222/00ff88?text=SERVICE+BLUEPRINT" alt="Volpi Service Blueprint" class="max-w-full h-auto opacity-50">
+                            </div>
+                            <p class="mono text-[10px] text-neutral-500 uppercase">Outcome: Reduced misalignment between teams and minimized rework.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Design Decisions -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">04 / DESIGN DECISIONS</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Balanced<br>Solutions</h3>
+                </div>
+                <div class="lg:col-span-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="group border border-white/5 p-8 hover:bg-[var(--accent)]/[0.02] transition-colors">
+                            <h4 class="mono text-xs uppercase text-white mb-2 tracking-widest">Process Transparency</h4>
+                            <p class="text-sm text-neutral-400">Prioritized understanding over speed illusions, ensuring users always knew their status.</p>
+                        </div>
+                        <div class="group border border-white/5 p-8 hover:bg-[var(--accent)]/[0.02] transition-colors">
+                            <h4 class="mono text-xs uppercase text-white mb-2 tracking-widest">Value-Driven Consolidation</h4>
+                            <p class="text-sm text-neutral-400">Consolidated steps that created no user or business value to streamline the flow.</p>
+                        </div>
+                        <div class="group border border-white/5 p-8 hover:bg-[var(--accent)]/[0.02] transition-colors">
+                            <h4 class="mono text-xs uppercase text-white mb-2 tracking-widest">Status Feedback Loop</h4>
+                            <p class="text-sm text-neutral-400">Introduced clear, proactive status updates instead of silent, anxiety-inducing waiting periods.</p>
+                        </div>
+                        <div class="group border border-white/5 p-8 hover:bg-[var(--accent)]/[0.02] transition-colors">
+                            <h4 class="mono text-xs uppercase text-white mb-2 tracking-widest">Compliance Management</h4>
+                            <p class="text-sm text-neutral-400">Designed for regulatory constraints without exposing complexity to the end-users.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 p-8 bg-white/5 border-l-4 border-[var(--accent)]">
+                        <p class="text-xl text-white italic leading-tight">
+                            "Users didn’t mind waiting for credit analysis — they minded not knowing what was happening."
+                        </p>
+                        <p class="mono text-[10px] text-neutral-500 uppercase mt-4">— Key Project Insight</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Impact -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">05 / IMPACT + RESULTS</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Measurable<br>Success</h3>
+                </div>
+                <div class="lg:col-span-8">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-8 mb-16">
+                        <div>
+                            <div class="text-5xl font-black text-white mb-2">-40%</div>
+                            <div class="mono text-[10px] text-neutral-500 uppercase tracking-widest leading-tight">Average Process Time</div>
+                        </div>
+                        <div>
+                            <div class="text-5xl font-black text-white mb-2">+35%</div>
+                            <div class="mono text-[10px] text-neutral-500 uppercase tracking-widest leading-tight">Conversion Rate</div>
+                        </div>
+                        <div>
+                            <div class="text-5xl font-black text-white mb-2">+120%</div>
+                            <div class="mono text-[10px] text-neutral-500 uppercase tracking-widest leading-tight">Operational Efficiency</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 p-12 border border-white/5">
+                        <h4 class="mono text-xs text-[var(--accent)] uppercase mb-6 tracking-widest">// This project demonstrates:</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 text-sm text-neutral-400">
+                            <li class="flex gap-3"><span>—</span> End-to-end UX ownership in complex, regulated systems</li>
+                            <li class="flex gap-3"><span>—</span> Experience strategy that scales beyond interface design</li>
+                            <li class="flex gap-3"><span>—</span> Ability to translate ambiguity into clear logic</li>
+                            <li class="flex gap-3"><span>—</span> Design decisions tied directly to business outcomes</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Project Navigation -->
+    <footer class="border-t border-white/5 pt-24 pb-12 mt-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-12">
+                <div>
+                    <span class="mono text-[10px] text-neutral-500 uppercase tracking-widest mb-4 block">Next Project</span>
+                    <a href="torre-controle.html" class="text-6xl md:text-8xl font-black uppercase hover:text-[var(--accent)] transition-colors tracking-tighter italic">TORRE DE<br>CONTROLE</a>
+                </div>
+                <a href="../index.html" class="mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 hover:text-white transition-all pb-4">
+                    Back to Index [04]
+                </a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
