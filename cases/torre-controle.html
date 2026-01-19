@@ -3,520 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Torre de Controle Logístico (AZ Ship) — Case Study</title>
+    <title>Torre de Controle Logístico — Case Study</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #ff8844;
+            --bg: #050505;
+            --accent: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.3);
+            --border: #222;
+            --text-main: #ffffff;
+            --text-dim: #888;
         }
         
         body {
             font-family: 'Inter', sans-serif;
-            background: #050505;
+            background: var(--bg);
             color: #e5e5e5;
         }
         
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
         
-        .hero-grid {
-            background-image: 
-                linear-gradient(rgba(255, 136, 68, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 136, 68, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
+        .bg-noise {
+            position: fixed;
+            inset: 0;
+            z-index: 5;
+            opacity: 0.05;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
         }
-        
+
+        .hud-nav {
+            display: none;
+        }
+
+        /* Case Back Affordance */
+        .case-breadcrumb {
+            position: absolute;
+            top: 2rem;
+            left: 2.5rem;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono';
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .case-breadcrumb a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .case-breadcrumb a:hover {
+            color: var(--accent);
+        }
+
         .section-divider {
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 136, 68, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
             margin: 4rem 0;
-        }
-        
-        .glow-orange {
-            box-shadow: 0 0 20px rgba(255, 136, 68, 0.2);
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased overflow-x-hidden selection:bg-[#00ff88] selection:text-black">
     
-    <!-- Header -->
-    <header class="border-b border-white/5 sticky top-0 bg-black/90 backdrop-blur-lg z-50">
-        <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-            <a href="../index.html" class="mono text-sm hover:text-[#ff8844] transition-colors">← BACK TO PORTFOLIO</a>
-            <div class="mono text-xs text-neutral-600">CASE_03</div>
-        </div>
-    </header>
+    <!-- Case Breadcrumb Navigation -->
+    <div class="case-breadcrumb">
+        <a href="../index.html#work">← Back to Projects</a>
+    </div>
 
-    <!-- Hero -->
-    <section class="py-24 border-b border-white/5 hero-grid relative overflow-hidden">
-        <div class="absolute top-20 right-20 w-96 h-96 bg-[#ff8844]/10 blur-3xl"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="inline-block border border-[#ff8844]/40 px-4 py-2 mb-8 bg-[#ff8844]/10">
-                <span class="mono text-xs text-[#ff8844] uppercase tracking-widest font-bold">LOGISTICS / B2B PLATFORM</span>
+    <div class="bg-noise"></div>
+
+    <main class="relative z-10 pt-32">
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-6 mb-32">
+            <div class="inline-block border border-[var(--accent)]/30 px-3 py-1 mb-8 bg-[var(--accent)]/5">
+                <span class="mono text-[10px] text-[var(--accent)] uppercase tracking-widest font-bold">Logistics • B2B Platform • Automation</span>
             </div>
-            <h1 class="text-7xl md:text-8xl font-black uppercase mb-8 leading-[0.9]" style="letter-spacing: -0.03em;">
-                TORRE DE<br>CONTROLE<br><span class="text-[#ff8844]">LOGÍSTICO</span>
+            
+            <h1 class="text-6xl md:text-8xl font-extrabold uppercase mb-12 leading-[0.85] tracking-tight" style="font-weight: 800;">
+                TORRE DE<br>CONTROLE<br><span class="text-[var(--accent)]">LOGÍSTICO</span>
             </h1>
-            <p class="text-2xl text-neutral-300 max-w-3xl leading-relaxed">
-                Plataforma B2B que centraliza <span class="text-white font-semibold">monitoramento</span>, <span class="text-white font-semibold">gestão</span> e <span class="text-white font-semibold">automação</span> de fretes — conectando transportadoras, caminhoneiros e operação em um único fluxo.
-            </p>
-            <p class="mono text-xs text-neutral-500 uppercase tracking-[0.2em] mt-6">
-                // UX + PRODUCT DESIGN • WORKFLOWS • REAL-TIME MONITORING • AUTOMATION
-            </p>
-        </div>
-    </section>
-
-    <!-- Overview -->
-    <section class="py-24 border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20">
-                <div>
-                    <h3 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-4">// PAPEL</h3>
-                    <p class="text-xl font-semibold">Design de Experiência e Interface</p>
-                </div>
-                <div>
-                    <h3 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-4">// CLIENTE</h3>
-                    <p class="text-xl font-semibold">AZ Ship</p>
-                </div>
-                <div>
-                    <h3 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-4">// ESCOPO</h3>
-                    <p class="text-xl font-semibold">Ideação → Protótipo → Entrega</p>
-                </div>
-            </div>
-
-            <div class="prose prose-invert max-w-4xl">
-                <p class="text-lg text-neutral-300 leading-relaxed">
-                    Atuei como designer responsável pela experiência e interface da primeira versão da plataforma, trabalhando em parceria com stakeholders
-                    e desenvolvedores. A pesquisa inicial foi conduzida internamente pela AZ Ship; a partir dela, liderei a síntese para decisões de produto,
-                    conduzi ideação, desenhei wireframes e protótipos (baixa e alta fidelidade) e acompanhei o desenvolvimento até a entrega.
-                </p>
-            </div>
-
-            <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="mono text-xs text-neutral-500 uppercase tracking-[0.2em] mb-4">// TL;DR</h4>
-                    <ul class="space-y-3 text-neutral-300">
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Criei uma plataforma B2B para <strong class="text-white">monitorar fretes em tempo real</strong> e gerenciar exceções (o que precisa de ação agora).</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Desenhei um modelo de <strong class="text-white">workflows configuráveis</strong> para resolver problemas automaticamente + escalar para humanos com critério.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Entreguei uma V1 com foco em <strong class="text-white">clareza operacional</strong>: menos ambiguidade, mais contexto e ação guiada.</span></li>
-                    </ul>
-                </div>
-
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="mono text-xs text-neutral-500 uppercase tracking-[0.2em] mb-4">// MINHAS CONTRIBUIÇÕES</h4>
-                    <ul class="space-y-3 text-neutral-300">
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Facilitação de ideação com stakeholders + devs (escopo e priorização da V1).</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Arquitetura de informação: dashboard, monitoramento, gestão e visão de exceções.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Wireframes (lo-fi) e protótipos (hi-fi) com estados e exceções.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Acompanhamento de implementação + handoff (componentes, specs, critérios).</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Definição de linguagem de status/alertas (consistência e rastreabilidade).</span></li>
-                    </ul>
-                </div>
-
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="mono text-xs text-neutral-500 uppercase tracking-[0.2em] mb-4">// CONTEXTO & RESTRIÇÕES</h4>
-                    <ul class="space-y-3 text-neutral-300">
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Trabalhei a partir da pesquisa inicial executada internamente pela equipe da AZ Ship.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Projeto B2B com múltiplos atores (operador, gestor, transportadora/motorista).</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Alto volume de exceções: o design precisava ser "anti-caos".</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Telas e dados foram anonimizados/abstraídos para preservar confidencialidade.</span></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-10 bg-gradient-to-br from-[#2a1a0a]/40 to-transparent border border-[#ff8844]/20 p-8">
-                <h4 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-4">// O QUE EU ENTREGUEI NA V1</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-neutral-300">
-                    <ul class="space-y-3">
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Fluxos principais: cadastro/gestão de transportadoras, monitoramento, chamados.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Dashboard operacional com filtros, estados e hierarquia de prioridades.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Protótipos hi-fi com estados (loading, erro, vazio, sucesso) e exceções.</span></li>
-                    </ul>
-                    <ul class="space-y-3">
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Modelo de automação: evento → regra → ação → escalonamento.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Padrões de UI para status/alertas (consistência + rastreio).</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Handoff: specs, critérios de aceite e colaboração com devs durante build.</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Challenge -->
-    <section class="py-24 border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="mono text-xs text-neutral-500 uppercase tracking-[0.2em] mb-12">// 01_O_DESAFIO</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-                <div>
-                    <h3 class="text-4xl font-black uppercase mb-6 leading-tight">O Problema</h3>
-                    <p class="text-lg text-neutral-300 leading-relaxed mb-6">
-                        A Torre de Controle Logístico nasceu da necessidade de <strong class="text-white">centralizar controle, monitoramento e gestão</strong>
-                        de fretes, conectando transportadoras, caminhoneiros e operação em um fluxo único.
-                    </p>
-                    <p class="text-lg text-neutral-300 leading-relaxed">
-                        Antes disso, a operação ficava refém de visibilidade fragmentada e decisões manuais: mais retrabalho, mais ruído e
-                        menos previsibilidade quando algo fugia do normal.
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-8">
+                    <p class="text-2xl text-neutral-300 leading-tight">
+                        Plataforma B2B que centraliza <span class="text-white font-semibold italic">monitoramento</span>, gestão e automação de fretes — conectando transportadoras, caminhoneiros e operação em um único fluxo infraestrutural.
                     </p>
                 </div>
-
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-6">Necessidades Identificadas</h4>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-3">
-                            <span class="text-[#ff8844] text-xl flex-shrink-0">→</span>
-                            <span class="text-neutral-300">Cadastro e gerenciamento de transportadoras</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-[#ff8844] text-xl flex-shrink-0">→</span>
-                            <span class="text-neutral-300">Monitoramento de cargas em tempo real</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-[#ff8844] text-xl flex-shrink-0">→</span>
-                            <span class="text-neutral-300">Análise e visualização de dados logísticos</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-[#ff8844] text-xl flex-shrink-0">→</span>
-                            <span class="text-neutral-300">Automação de resoluções de problemas</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-[#ff8844] text-xl flex-shrink-0">→</span>
-                            <span class="text-neutral-300">Fluxos configuráveis para diferentes clientes</span>
-                        </li>
-                    </ul>
+                <div class="lg:col-span-4 border-l border-white/10 pl-8">
+                    <div class="space-y-6">
+                        <div>
+                            <span class="mono text-[10px] text-neutral-500 uppercase block mb-1">Role</span>
+                            <span class="font-bold">Lead Product Designer</span>
+                        </div>
+                        <div>
+                            <span class="mono text-[10px] text-neutral-500 uppercase block mb-1">Client</span>
+                            <span class="font-bold">AZ Ship</span>
+                        </div>
+                        <div>
+                            <span class="mono text-[10px] text-neutral-500 uppercase block mb-1">Focus</span>
+                            <span class="font-bold">RT monitoring & Dispatch</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-4">// QUEM USA</h4>
-                    <ul class="space-y-3 text-neutral-300">
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span><strong class="text-white">Operação</strong>: monitora, resolve exceções, aciona transportadora.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span><strong class="text-white">Gestão</strong>: acompanha indicadores e gargalos.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span><strong class="text-white">Parceiros</strong>: atualizam status e respondem chamados.</span></li>
-                    </ul>
-                </div>
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-4">// O QUE “BOM” SIGNIFICA</h4>
-                    <ul class="space-y-3 text-neutral-300">
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Detectar rápido o que fugiu do normal (exceções).</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Resolver com menos passos e sem perder rastreabilidade.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Padronizar decisões via regras configuráveis (não “depender do herói”).</span></li>
-                    </ul>
-                </div>
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-4">// RISCOS DE UX</h4>
-                    <ul class="space-y-3 text-neutral-300">
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Sobrecarga de alertas (ruído) → priorização e agrupamento.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Dados incompletos → estados vazios e sugestões de ação.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Ambiguidade de status → linguagem consistente + histórico.</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Solution -->
-    <section class="py-24 border-b border-white/5">
+        <!-- Content Structure -->
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="mono text-xs text-neutral-500 uppercase tracking-[0.2em] mb-12">// 02_A_SOLUÇÃO</h2>
-            
-            <h3 class="text-4xl font-black uppercase mb-8 leading-tight">Sistema Inteligente de Automação</h3>
-            
-            <p class="text-xl text-neutral-300 leading-relaxed max-w-4xl mb-16">
-                Surgiu durante a ideação da plataforma a necessidade da <strong class="text-[#ff8844]">automação de diversas ações pelo sistema</strong>, 
-                fazendo com que qualquer problema com a carga que gere um chamado possa ter <strong class="text-[#ff8844]">resoluções automáticas</strong> 
-                e caso persista possa <strong class="text-[#ff8844]">alertar a pessoa correta</strong> para resolver a situação no menor tempo possível.
-            </p>
+            <div class="section-divider"></div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-4">// PRINCÍPIOS DE DESIGN</h4>
-                    <ul class="space-y-3 text-neutral-300">
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span><strong class="text-white">Exceções primeiro</strong>: o que está fora do esperado precisa aparecer antes.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span><strong class="text-white">Menos cliques, mais contexto</strong>: cada tela deve responder “o que aconteceu?” e “o que faço agora?”.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span><strong class="text-white">Automação com controle</strong>: regras configuráveis + trilha de decisão para auditoria.</span></li>
-                    </ul>
+            <!-- Overview -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">01 / OVERVIEW</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">The Ops<br>Backbone</h3>
                 </div>
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-4">// COMO A AUTOMAÇÃO FUNCIONA</h4>
-                    <p class="text-neutral-300 leading-relaxed">
-                        Modelei fluxos onde um evento (ex.: atraso, divergência, incidente) dispara ações automáticas
-                        (ex.: notificar, replanejar, abrir chamado) e só escala para humanos quando critérios de falha/tempo são atingidos.
+                <div class="lg:col-span-8 prose prose-invert">
+                    <p class="text-lg text-neutral-400 leading-relaxed">
+                        Atuei como designer responsável pela experiência e interface da primeira versão da plataforma, trabalhando em parceria com stakeholders e desenvolvedores. Liderei a síntese para decisões de produto, ideação, wireframes e protótipos de alta fidelidade, acompanhando o desenvolvimento até a entrega final.
                     </p>
-                    <p class="text-neutral-500 leading-relaxed mt-4 text-sm">
-                        Resultado: menos “caça ao problema”, mais resolução guiada.
-                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                        <div class="bg-white/5 border border-white/5 p-8">
+                            <h4 class="mono text-[10px] text-white uppercase mb-4 tracking-widest">// Contributions</h4>
+                            <ul class="space-y-2 text-sm text-neutral-400">
+                                <li class="flex gap-3"><span>—</span> Information Architecture</li>
+                                <li class="flex gap-3"><span>—</span> High-fidelity Prototypes</li>
+                                <li class="flex gap-3"><span>—</span> Automation Workflow Modeling</li>
+                                <li class="flex gap-3"><span>—</span> Developer Handoff & QA</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white/5 border border-white/5 p-8">
+                            <h4 class="mono text-[10px] text-white uppercase mb-4 tracking-widest">// Highlights</h4>
+                            <ul class="space-y-2 text-sm text-neutral-400">
+                                <li class="flex gap-3"><span>—</span> Zero-latency Monitoring</li>
+                                <li class="flex gap-3"><span>—</span> Configurable Rule Engines</li>
+                                <li class="flex gap-3"><span>—</span> Exception-first Dashboard</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-gradient-to-br from-[#2a1a0a] to-[#150a05] border border-[#ff8844]/30 p-8 glow-orange">
-                    <div class="text-5xl mb-6">🚚</div>
-                    <h4 class="text-xl font-black uppercase mb-4">Monitoramento Real-Time</h4>
-                    <p class="text-sm text-neutral-400 leading-relaxed">
-                        Visibilidade completa do status de todas as cargas, com atualizações em tempo real e alertas proativos.
-                    </p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-gradient-to-br from-[#2a1a0a] to-[#150a05] border border-[#ff8844]/30 p-8 glow-orange">
-                    <div class="text-5xl mb-6">⚙️</div>
-                    <h4 class="text-xl font-black uppercase mb-4">Fluxos Configuráveis</h4>
-                    <p class="text-sm text-neutral-400 leading-relaxed">
-                        Sistema flexível que se adapta às necessidades de diferentes clientes através de workflows personalizáveis.
-                    </p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-gradient-to-br from-[#2a1a0a] to-[#150a05] border border-[#ff8844]/30 p-8 glow-orange">
-                    <div class="text-5xl mb-6">🤖</div>
-                    <h4 class="text-xl font-black uppercase mb-4">Resolução Automática</h4>
-                    <p class="text-sm text-neutral-400 leading-relaxed">
-                        Problemas comuns são resolvidos automaticamente, escalando apenas casos que requerem atenção humana.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Process -->
-    <section class="py-24 border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="mono text-xs text-neutral-500 uppercase tracking-[0.2em] mb-12">// 03_O_PROCESSO</h2>
-            
-            <div class="space-y-12">
-                <!-- Step 1 -->
-                <div class="border-l-4 border-[#ff8844] pl-8">
-                    <div class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-3">Fase 01</div>
-                    <h4 class="text-2xl font-black uppercase mb-4">Ideação Colaborativa</h4>
-                    <p class="text-neutral-300 leading-relaxed max-w-3xl">
-                        Trabalhei diretamente com stakeholders e desenvolvedores para mapear todos os fluxos críticos, 
-                        identificar gargalos e oportunidades de automação. Essa fase foi essencial para entender não apenas 
-                        o que o sistema precisava fazer, mas como ele deveria se comportar em cenários reais.
-                    </p>
-                    <p class="text-neutral-500 leading-relaxed max-w-3xl mt-4 text-sm">
-                        Entregáveis: backlog de V1, definição de responsabilidades (quem faz o quê), e critérios para quando o sistema deve automatizar vs. escalar.
-                    </p>
-                </div>
-
-                <!-- Step 2 -->
-                <div class="border-l-4 border-[#ff8844] pl-8">
-                    <div class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-3">Fase 02</div>
-                    <h4 class="text-2xl font-black uppercase mb-4">Wireframes e Protótipos</h4>
-                    <p class="text-neutral-300 leading-relaxed max-w-3xl">
-                        Criei wireframes de baixa fidelidade para validar estrutura e fluxos rapidamente, seguidos por 
-                        protótipos de alta fidelidade que simulavam a experiência completa da plataforma, incluindo 
-                        estados de erro, loading e sucessos dos fluxos automatizados.
-                    </p>
-                    <p class="text-neutral-500 leading-relaxed max-w-3xl mt-4 text-sm">
-                        Enfoque: estados vazios, exceções e “próxima melhor ação” por contexto (evitar tela que só informa e não resolve).
-                    </p>
-                </div>
-
-                <!-- Step 3 -->
-                <div class="border-l-4 border-[#ff8844] pl-8">
-                    <div class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-3">Fase 03</div>
-                    <h4 class="text-2xl font-black uppercase mb-4">Desenvolvimento e Entrega</h4>
-                    <p class="text-neutral-300 leading-relaxed max-w-3xl">
-                        Acompanhei o desenvolvimento da primeira versão, garantindo que a implementação mantivesse a 
-                        qualidade da experiência projetada. Ajustei detalhes de interface e interação durante o processo 
-                        para otimizar usabilidade e performance.
-                    </p>
-                    <p class="text-neutral-500 leading-relaxed max-w-3xl mt-4 text-sm">
-                        Ponto crítico: manter consistência de status/alertas e garantir rastreabilidade das ações (essencial em operação).
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Key Features -->
-    <section class="py-24 border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="mono text-xs text-neutral-500 uppercase tracking-[0.2em] mb-12">// 04_FUNCIONALIDADES_CHAVE</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="text-xl font-black uppercase mb-4 text-[#ff8844]">Dashboard Centralizado</h4>
-                    <p class="text-neutral-300 leading-relaxed">
-                        Visão única de todas as operações logísticas com métricas em tempo real, filtros avançados e 
-                        capacidade de drill-down para análise detalhada.
-                    </p>
-                </div>
-
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="text-xl font-black uppercase mb-4 text-[#ff8844]">Gestão de Transportadoras</h4>
-                    <p class="text-neutral-300 leading-relaxed">
-                        Sistema completo de cadastro, documentação e monitoramento de performance de transportadoras e motoristas.
-                    </p>
-                </div>
-
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="text-xl font-black uppercase mb-4 text-[#ff8844]">Sistema de Alertas Inteligente</h4>
-                    <p class="text-neutral-300 leading-relaxed">
-                        Notificações contextuais que direcionam os alertas para as pessoas certas no momento certo, 
-                        reduzindo ruído e aumentando eficiência.
-                    </p>
-                </div>
-
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="text-xl font-black uppercase mb-4 text-[#ff8844]">Configuração de Workflows</h4>
-                    <p class="text-neutral-300 leading-relaxed">
-                        Interface visual para configurar regras de automação e fluxos de resolução personalizados para 
-                        cada tipo de cliente e operação.
-                    </p>
-                </div>
-
-                <div class="bg-white/5 border border-white/10 p-8 md:col-span-2">
-                    <h4 class="text-xl font-black uppercase mb-4 text-[#ff8844]">Gestão de Exceções (Chamados)</h4>
-                    <p class="text-neutral-300 leading-relaxed">
-                        Centralização de problemas com status, responsáveis e histórico de ações. A ideia é reduzir o tempo de detecção,
-                        acelerar a resolução e manter rastreabilidade (quem fez o quê e por quê).
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Impact -->
-    <section class="py-24 border-b border-white/5 bg-gradient-to-b from-transparent to-[#ff8844]/5">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="mono text-xs text-neutral-500 uppercase tracking-[0.2em] mb-12">// 05_IMPACTO</h2>
-            
-            <div class="max-w-4xl">
-                <h3 class="text-4xl font-black uppercase mb-8 leading-tight">Centralização e Automação</h3>
-                <p class="text-xl text-neutral-300 leading-relaxed mb-8">
-                    A Torre de Controle Logístico consolidou múltiplos sistemas fragmentados em uma única plataforma coesa, 
-                    eliminando silos de informação e permitindo que a equipe operacional respondesse a problemas em uma 
-                    fração do tempo anterior.
-                </p>
-                <p class="text-xl text-neutral-300 leading-relaxed">
-                    A automação de resoluções rotineiras liberou a equipe para focar em casos complexos que realmente 
-                    exigem expertise humana, <strong class="text-[#ff8844]">transformando a operação logística de reativa 
-                    para proativa</strong>.
-                </p>
             </div>
 
             <div class="section-divider"></div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-6">Impacto (qualitativo)</h4>
-                    <ul class="space-y-3 text-neutral-300">
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Menos retrabalho operacional com um fluxo claro de exceções.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Mais previsibilidade: regras e responsáveis explícitos por tipo de problema.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Escalabilidade por cliente: workflows configuráveis sem reescrever o produto.</span></li>
-                    </ul>
+            <!-- The Problem -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">02 / THE CHALLENGE</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Fragmented<br>Visibility</h3>
                 </div>
-                <div class="bg-white/5 border border-white/10 p-8">
-                    <h4 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-6">KPIs acompanhados</h4>
-                    <ul class="space-y-3 text-neutral-300">
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Tempo para detectar uma exceção (MTTD) e tempo para resolver (MTTR).</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>% de exceções resolvidas automaticamente vs. escaladas.</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Taxa de incidentes recorrentes por rota/transportadora (qualidade do sistema).</span></li>
-                        <li class="flex items-start gap-3"><span class="text-[#ff8844]">→</span><span>Satisfação da operação (CSAT interno) e redução de “tarefas manuais” repetitivas.</span></li>
-                    </ul>
+                <div class="lg:col-span-8">
+                    <p class="text-xl text-neutral-300 mb-8 leading-tight">
+                        Antes da plataforma, a operação ficava refém de visibilidade fragmentada e decisões manuais: retrabalho, ruído e falta de previsibilidade quando algo fugia do normal. O sistema precisava ser "anti-caos".
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-6 border border-white/5 bg-white/[0.02]">
+                            <div class="text-[var(--accent)] mono text-xl mb-4">01</div>
+                            <p class="text-xs text-neutral-500 uppercase tracking-widest leading-relaxed">Alert Fatigue & Excessive Noise</p>
+                        </div>
+                        <div class="p-6 border border-white/5 bg-white/[0.02]">
+                            <div class="text-[var(--accent)] mono text-xl mb-4">02</div>
+                            <p class="text-xs text-neutral-500 uppercase tracking-widest leading-relaxed">Manual Incident Management</p>
+                        </div>
+                        <div class="p-6 border border-white/5 bg-white/[0.02]">
+                            <div class="text-[var(--accent)] mono text-xl mb-4">03</div>
+                            <p class="text-xs text-neutral-500 uppercase tracking-widest leading-relaxed">Lack of Standardized Responses</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="mt-10 bg-white/5 border border-[#ff8844]/20 p-8">
-                <h4 class="mono text-xs text-[#ff8844] uppercase tracking-wider mb-4">// RESULTADOS</h4>
-                <p class="text-neutral-300 leading-relaxed max-w-4xl">
-                    Ao priorizar exceções (o que precisa de ação agora) e automatizar resoluções repetitivas, a operação ganhou velocidade, previsibilidade
-                    e menos retrabalho.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                    <div class="bg-black/30 border border-white/10 p-5">
-                        <div class="mono text-[10px] text-neutral-500 uppercase tracking-wider">MTTR</div>
-                        <div class="text-3xl font-black text-[#ff8844] mt-2">-25% ~ -45%</div>
-                        <div class="text-xs text-neutral-500 mt-2">Tempo médio de resolução</div>
-                    </div>
-                    <div class="bg-black/30 border border-white/10 p-5">
-                        <div class="mono text-[10px] text-neutral-500 uppercase tracking-wider">AUTOMAÇÃO</div>
-                        <div class="text-3xl font-black text-[#ff8844] mt-2">30% ~ 60%</div>
-                        <div class="text-xs text-neutral-500 mt-2">Exceções resolvidas sem humano</div>
-                    </div>
-                    <div class="bg-black/30 border border-white/10 p-5">
-                        <div class="mono text-[10px] text-neutral-500 uppercase tracking-wider">ERRO HUMANO</div>
-                        <div class="text-3xl font-black text-[#ff8844] mt-2">-15% ~ -30%</div>
-                        <div class="text-xs text-neutral-500 mt-2">Re-trabalho por inconsistência</div>
+            <div class="section-divider"></div>
+
+            <!-- Solution -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">03 / THE SOLUTION</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Intelligent<br>Automation</h3>
+                </div>
+                <div class="lg:col-span-8">
+                    <p class="text-xl text-neutral-300 mb-12 leading-tight">
+                        Modelei fluxos onde um evento (ex.: atraso, divergência) dispara ações automáticas e só escala para humanos quando critérios de falha/tempo são atingidos.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="group border border-white/5 p-8 hover:bg-[var(--accent)]/[0.02] transition-colors">
+                            <h4 class="mono text-xs uppercase text-white mb-2 tracking-widest">Exception-First Design</h4>
+                            <p class="text-sm text-neutral-400">O dashboard prioriza o que fugiu do esperado, garantindo que o operador foque no que precisa de ação imediata.</p>
+                        </div>
+                        <div class="group border border-white/5 p-8 hover:bg-[var(--accent)]/[0.02] transition-colors">
+                            <h4 class="mono text-xs uppercase text-white mb-2 tracking-widest">Configurable Workflows</h4>
+                            <p class="text-sm text-neutral-400">Interface visual para configurar regras de automação adaptáveis a cada tipo de cliente e operação logística.</p>
+                        </div>
+                        <div class="group border border-white/5 p-8 hover:bg-[var(--accent)]/[0.02] transition-colors">
+                            <h4 class="mono text-xs uppercase text-white mb-2 tracking-widest">Contextual Alerts</h4>
+                            <p class="text-sm text-neutral-400">Notificações direcionadas com histórico de decisões e rastreabilidade total (quem fez o quê e por quê).</p>
+                        </div>
                     </div>
                 </div>
-                <p class="text-neutral-500 text-sm mt-6">
-                    Notas: variação por tipo de exceção e perfil de operação.
-                </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Impact -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 py-24">
+                <div class="lg:col-span-4">
+                    <h2 class="mono text-[10px] text-[var(--accent)] uppercase tracking-[0.3em] mb-4">04 / IMPACT + METRICS</h2>
+                    <h3 class="text-3xl font-black uppercase leading-none italic">Operational<br>Efficacy</h3>
+                </div>
+                <div class="lg:col-span-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div>
+                            <div class="text-5xl font-black text-white mb-2">-45%</div>
+                            <div class="mono text-[10px] text-neutral-500 uppercase tracking-widest">MTTR (Resolution Time)</div>
+                        </div>
+                        <div>
+                            <div class="text-5xl font-black text-white mb-2">60%</div>
+                            <div class="mono text-[10px] text-neutral-500 uppercase tracking-widest">Auto-Resolved Exceptions</div>
+                        </div>
+                        <div>
+                            <div class="text-5xl font-black text-white mb-2">-30%</div>
+                            <div class="mono text-[10px] text-neutral-500 uppercase tracking-widest">Human Error Reduction</div>
+                        </div>
+                    </div>
+                    <p class="text-lg text-neutral-400 mt-12 leading-relaxed italic">
+                        "A Torre de Controle transformou a operação logística de reativa para proativa, liberando capital humano para casos de alta complexidade tecnológica."
+                    </p>
+                </div>
             </div>
         </div>
-    </section>
+    </main>
 
-    <!-- Learnings -->
-    <section class="py-24 border-b border-white/5">
+    <!-- Project Navigation -->
+    <footer class="border-t border-white/5 pt-24 pb-12 mt-24">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="mono text-xs text-neutral-500 uppercase tracking-[0.2em] mb-12">// 06_APRENDIZADOS</h2>
-            
-            <div class="max-w-4xl space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-12">
                 <div>
-                    <h4 class="text-xl font-bold mb-3 text-[#ff8844]">Complexidade B2B requer flexibilidade</h4>
-                    <p class="text-neutral-300 leading-relaxed">
-                        Sistemas empresariais precisam se adaptar a diferentes workflows e processos. A configurabilidade 
-                        não é um "nice to have" – é essencial para adoção e sucesso em longo prazo.
-                    </p>
+                    <span class="mono text-[10px] text-neutral-500 uppercase tracking-widest mb-4 block">Next Project</span>
+                    <a href="algar.html" class="text-6xl md:text-8xl font-black uppercase hover:text-[var(--accent)] transition-colors tracking-tighter italic">ALGAR<br>TELECOM</a>
                 </div>
-
-                <div>
-                    <h4 class="text-xl font-bold mb-3 text-[#ff8844]">Automação inteligente > Automação cega</h4>
-                    <p class="text-neutral-300 leading-relaxed">
-                        Não é sobre automatizar tudo, mas sim automatizar o que deve ser automático e facilitar a intervenção 
-                        humana quando necessária. O sistema precisa saber quando escalar.
-                    </p>
-                </div>
-
-                <div>
-                    <h4 class="text-xl font-bold mb-3 text-[#ff8844]">Colaboração técnica desde o início</h4>
-                    <p class="text-neutral-300 leading-relaxed">
-                        Trabalhar lado a lado com desenvolvedores desde a ideação permitiu criar soluções tecnicamente 
-                        viáveis que não comprometiam a experiência do usuário.
-                    </p>
-                </div>
-
-                <div>
-                    <h4 class="text-xl font-bold mb-3 text-[#ff8844]">B2B não é “feio”, é “claro”</h4>
-                    <p class="text-neutral-300 leading-relaxed">
-                        O foco foi reduzir ambiguidade: linguagem de status consistente, ações recomendadas por contexto e uma UI que aguenta volume.
-                        Melhor UX aqui significa menos erro e mais confiança.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer/CTA -->
-    <section class="py-24">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h3 class="text-3xl font-black uppercase mb-8">Gostou do Projeto?</h3>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="../index.html#work" class="inline-block bg-[#ff8844] text-black px-8 py-4 font-bold uppercase tracking-wider hover:bg-white transition-colors">
-                    Ver Mais Projetos
-                </a>
-                <a href="../index.html#contact" class="inline-block border border-white/20 text-white px-8 py-4 font-bold uppercase tracking-wider hover:border-[#ff8844] hover:text-[#ff8844] transition-colors">
-                    Entrar em Contato
+                <a href="../index.html" class="mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 hover:text-white transition-all pb-4">
+                    Back to Index [04]
                 </a>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="border-t border-white/5 py-8">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="mono text-xs text-neutral-600">© 2026 Miyano Bot. Case Study: Torre de Controle Logístico</p>
         </div>
     </footer>
-
 </body>
 </html>
