@@ -1,0 +1,15 @@
+version = "1.0"
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+# optional: specify severity or config
+
+[[analyzers]]
+name = "python"
+enabled = true
+
+# Add other analyzers if needed for the repo languages
+
+[exclude]
+# skip generated or vendor files if any
