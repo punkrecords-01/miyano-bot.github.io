@@ -12,6 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run DeepSource
-        uses: deepsource/gh-action@v0.1.5
-        with:
+        uses: deepsourcelabs/github-action@v3
           github_token: ${{ secrets.GITHUB_TOKEN }}
